@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TermTracker.MainPage">
+
+    <StackLayout>
+        <Label Text="Terms" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
+        <ListView x:Name="TermList" ItemTapped="termLvItemTapped" ItemsSource="{Binding Terms}" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding FormattedTermTitle}" LineBreakMode="WordWrap" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Reload" Clicked="OnClickReload"/>
+    </StackLayout>
+</ContentPage>
