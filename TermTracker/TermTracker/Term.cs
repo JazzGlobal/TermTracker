@@ -16,6 +16,7 @@ namespace TermTracker
             DisplayName = displayName;
             TermStart = termStart;
             TermEnd = termStart.AddMonths(6);
+            Courses = new List<Course>();
         }
 
         public Term(string displayName, DateTime termStart, List<Course> courses)
@@ -27,6 +28,7 @@ namespace TermTracker
         }
         public Term()
         {
+
         }
     }
 }
