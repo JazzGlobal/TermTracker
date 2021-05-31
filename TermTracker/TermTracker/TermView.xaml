@@ -8,13 +8,12 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label Text="{Binding FormattedTermTitle}" LineBreakMode="WordWrap" />
+                        <Label Text="{Binding FormattedCourseTitle}" LineBreakMode="WordWrap" />
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Add Term" Clicked="OnClickAddTerm"></Button>
+        <Button Text="Add Course" Clicked="OnClickAddCourse"></Button>
         <Button Text="Reload" Clicked="OnClickReload"/>
     </StackLayout>
-    </ContentPage.Content>
 </ContentPage>
