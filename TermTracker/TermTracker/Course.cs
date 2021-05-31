@@ -7,13 +7,26 @@ namespace TermTracker
         public string CourseName { get; set; }
         public DateTime CourseStart { get; set; }
         public DateTime CourseEnd { get; set; }
+        public CourseStatus Status { get; set; }
+        public string Instructor { get; set; }
+        public string Notes { get; set; }
+
+        public enum CourseStatus
+        {
+            Scheduled = 1,
+            Ongoing = 2,
+            Withdrawn = 3
+        }
         public string FormattedCourseTitle { get { return $"{CourseName}\n{CourseStart.ToString("MM-dd-yyyy")} - {CourseEnd.ToString("MM-dd-yyyy")}"; } }
 
-        public Course(string courseName, DateTime startDate, DateTime endDate)
+        public Course(string courseName, DateTime startDate, DateTime endDate, CourseStatus status, string instructor, string notes)
         {
             CourseName = courseName;
             CourseStart = startDate;
             CourseEnd = endDate;
+            Status = status;
+            Instructor = instructor;
+            Notes = notes;
         }
     }
 }
