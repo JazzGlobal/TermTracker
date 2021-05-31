@@ -33,6 +33,7 @@ namespace TermTracker
             {
                 case "View":
                     Debug.WriteLine($"Viewing the {selectedItem.DisplayName.ToUpper()} term!");
+                    await Navigation.PushAsync(new TermView(ref selectedItem));
                     break;
                 case "Edit":
                     Debug.WriteLine($"Editing the {selectedItem.DisplayName.ToUpper()} term!");
