@@ -2,11 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.TermView">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+    <StackLayout>
+        <Label x:Name="coursesListLabel" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
+        <ListView x:Name="CourseList" ItemTapped="courseLvItemTapped" ItemsSource="{Binding Courses}" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding FormattedTermTitle}" LineBreakMode="WordWrap" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Add Term" Clicked="OnClickAddTerm"></Button>
+        <Button Text="Reload" Clicked="OnClickReload"/>
+    </StackLayout>
     </ContentPage.Content>
 </ContentPage>
