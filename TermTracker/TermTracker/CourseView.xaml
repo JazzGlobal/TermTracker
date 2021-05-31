@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TermTracker.CourseView">
+    <ContentPage.Content>
+        <StackLayout Padding="30,10,30,10">
+            <Label x:Name="courseNameLabel" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
+            <Label x:Name="courseDurationLabel" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
+            
+            <Label x:Name="courseStatusLabel" FontAttributes="Bold" Text="Status"/>
+            <Label x:Name="courseStatusValue"/>
+            <Label x:Name="courseInstructorLabel" FontAttributes="Bold" Text="Instructor"/>
+            <Label x:Name="courseInstructorValue"/>
+            <Label x:Name="courseNotesLabel" FontAttributes="Bold" Text="Notes"/>
+            <Label x:Name="courseNotesValue"/>
+            <Label x:Name="courseAssessmentsLabel" FontAttributes="Bold" Text="Assessments"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
