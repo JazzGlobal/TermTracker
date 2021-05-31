@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections.ObjectModel;
 using System;
+using System.Diagnostics;
 
 namespace TermTracker
 {
@@ -11,34 +12,29 @@ namespace TermTracker
         ObservableCollection<Course> courses = new ObservableCollection<Course>();
 
         public ObservableCollection<Course> Courses { get { return courses; } }
-
-        public TermView(ref Term term)
+        Term term;
+        public TermView(Term term)
         {
             InitializeComponent();
-            
-            if(term.Courses.Count == 0)
-            {
-                PopulateTermWithCourses(ref term);
-                
-            }
-
+            this.term = term;
+            PopulateTermWithCourses();
             coursesListLabel.Text = $"Courses ({term.DisplayName})";
             CourseList.ItemsSource = term.Courses;
         }
-        
+
         private void courseLvItemTapped (object sender, ItemTappedEventArgs e)
         {
-
+            Debug.WriteLine("Course ListView Item Tapped");
         }
         private void OnClickAddCourse(object sender, EventArgs e)
         {
-
+            Debug.WriteLine("Add Course Button Pressed");
         }
         private void OnClickReload(object sender, EventArgs e)
         {
-
+            Debug.WriteLine("Reload Button Pressed");
         }
-        private void PopulateTermWithCourses(ref Term term)
+        private void PopulateTermWithCourses()
         {
             for (int i = 0; i < 5; i++)
             {
