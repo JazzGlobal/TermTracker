@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace TermTracker
 {
     // [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TermEdit : ContentPage
     {
-        Term term; 
+        Term term;
         public TermEdit(ref Term term)
         {
             InitializeComponent();
@@ -31,10 +26,10 @@ namespace TermTracker
             Debug.WriteLine(picker.Date);
         }
 
-        void OnSubmitButtonClicked (object sender, EventArgs args)
+        void OnSubmitButtonClicked(object sender, EventArgs args)
         {
             Debug.WriteLine("Submit button clicked!");
-            if(termNameInput.Text.Trim() != "" && termNameInput.Text != null)
+            if (termNameInput.Text.Trim() != "" && termNameInput.Text != null)
             {
                 term.DisplayName = termNameInput.Text;
                 term.TermStart = termStartDateInput.Date;
