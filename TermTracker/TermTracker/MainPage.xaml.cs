@@ -26,7 +26,7 @@ namespace TermTracker
         {
             ListView listView = (ListView)sender;
             Term selectedItem = (Term)listView.SelectedItem;
-            string result = await DisplayActionSheet("View / Edit Term", "Cancel-", null, new string[] { "View", "Edit" });
+            string result = await DisplayActionSheet("View / Edit Term", "Cancel", null, new string[] { "View", "Edit" });
 
             // Pass the selected term's data to the next form (view or edit form).
             switch (result)
