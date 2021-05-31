@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.TermEdit">
-    <ContentPage.Content>
         <StackLayout Padding="30,10,30,10">
             <Label x:Name="termNameLabel"  Text="Term 1 Edit" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
             <Label Text="Term Name"/>
@@ -11,5 +10,4 @@
             <DatePicker x:Name="termStartDateInput" DateSelected="OnDateSelected"></DatePicker>
             <Button Text="Submit" Clicked="OnSubmitButtonClicked"></Button>
         </StackLayout>
-    </ContentPage.Content>
 </ContentPage>
