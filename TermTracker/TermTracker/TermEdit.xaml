@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TermTracker.TermEdit">
+    <ContentPage.Content>
+        <StackLayout Padding="30,10,30,10">
+            <Label x:Name="termNameLabel"  Text="Term 1 Edit" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
+            <Label Text="Term Name"/>
+            <Entry x:Name="termNameInput" Placeholder="Term Name" ></Entry>
+            <Label Text="Term Start Date"/>
+            <DatePicker x:Name="termStartDateInput" DateSelected="OnDateSelected"></DatePicker>
+            <Button Text="Submit" Clicked="OnSubmitButtonClicked"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
