@@ -41,6 +41,11 @@ namespace TermTracker
             }
         }
 
+        private void OnClickAddTerm(object sender, EventArgs e)
+        {
+            // Add new term.
+        }
+
         private void OnClickReload(object sender, EventArgs e)
         {
             Console.WriteLine("Reloaded Terms!");
