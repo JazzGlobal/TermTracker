@@ -17,7 +17,10 @@ namespace TermTracker
         {
             InitializeComponent();
             this.term = term;
-            PopulateTermWithCourses();
+            if(term.Courses.Count == 0)
+            {
+                PopulateTermWithCourses();
+            }
             coursesListLabel.Text = $"Courses ({term.DisplayName})";
             CourseList.ItemsSource = term.Courses;
         }
@@ -30,9 +33,11 @@ namespace TermTracker
             {
                 case "View":
                     Debug.WriteLine($"Viewing the {selectedCourse.CourseName} course!");
+                    await Navigation.PushAsync(new CourseView(selectedCourse));
                     break;
                 case "Edit":
                     Debug.WriteLine($"Editing the {selectedCourse.CourseName} course!");
+                    await Navigation.PushAsync(new CourseEdit(selectedCourse));
                     break;
                 case "Cancel":
                     Debug.WriteLine("Cancelling with no changes!");
@@ -51,7 +56,7 @@ namespace TermTracker
         {
             for (int i = 0; i < 5; i++)
             {
-                term.Courses.Add(new Course("Course", DateTime.Now, DateTime.Now.AddDays(90)));
+                term.Courses.Add(new Course("Course", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!"));
             }
         }
     }
