@@ -9,7 +9,7 @@ namespace TermTracker
     public partial class TermEdit : ContentPage
     {
         Term term;
-        public TermEdit(ref Term term)
+        public TermEdit(Term term)
         {
             InitializeComponent();
             this.term = term;
