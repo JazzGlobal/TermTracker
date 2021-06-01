@@ -1,9 +1,8 @@
 ﻿
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using System.Collections.ObjectModel;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Xamarin.Forms;
 
 namespace TermTracker
 {
@@ -17,7 +16,7 @@ namespace TermTracker
         {
             InitializeComponent();
             this.term = term;
-            if(term.Courses.Count == 0)
+            if (term.Courses.Count == 0)
             {
                 PopulateTermWithCourses();
             }
@@ -25,7 +24,7 @@ namespace TermTracker
             CourseList.ItemsSource = term.Courses;
         }
 
-        private async void courseLvItemTapped (object sender, ItemTappedEventArgs e)
+        private async void courseLvItemTapped(object sender, ItemTappedEventArgs e)
         {
             Course selectedCourse = (Course)e.Item;
             string result = await DisplayActionSheet($"View / Edit {selectedCourse.CourseName}", "Cancel", null, new string[] { "View", "Edit" });
