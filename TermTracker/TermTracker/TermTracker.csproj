@@ -16,16 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="CourseEdit.xaml">
+    <EmbeddedResource Update="Course\CourseEdit.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="CourseView.xaml">
+    <EmbeddedResource Update="Course\CourseView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="TermEdit.xaml">
+    <EmbeddedResource Update="Term\TermEdit.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="TermView.xaml">
+    <EmbeddedResource Update="Term\TermView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

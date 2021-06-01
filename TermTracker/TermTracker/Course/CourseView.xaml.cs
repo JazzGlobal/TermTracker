@@ -16,7 +16,7 @@ namespace TermTracker
         {
             InitializeComponent();
             courseNameLabel.Text = course.CourseName;
-            courseDurationLabel.Text = $"{course.CourseStart} - {course.CourseEnd}";
+            courseDurationLabel.Text = $"{course.CourseStart:MM-dd-yyyy} - {course.CourseEnd:MM-dd-yyyy}";
             courseInstructorValue.Text = course.Instructor;
             courseStatusValue.Text = course.Status.ToString();
             courseNotesValue.Text = course.Notes;
