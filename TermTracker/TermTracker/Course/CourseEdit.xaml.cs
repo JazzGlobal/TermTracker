@@ -12,7 +12,7 @@ namespace TermTracker
             InitializeComponent();
 
             this.course = course;
-            courseNameLabel.Text = course.CourseName;
+            courseNameValue.Text = course.CourseName;
             courseStartValue.Date = course.CourseStart;
             courseEndValue.Date = course.CourseEnd;
             courseNotesValue.Text = course.Notes;
@@ -20,14 +20,9 @@ namespace TermTracker
             courseStatusPicker.Items.Add(Course.CourseStatus.Ongoing.ToString());
             courseStatusPicker.Items.Add(Course.CourseStatus.Scheduled.ToString());
             courseStatusPicker.Items.Add(Course.CourseStatus.Withdrawn.ToString());
-            courseStatusPicker.SelectedIndex = (int) course.Status;
-            
-        }
-        private void OnGoToAssessmentsButtonClicked(object sender, EventArgs args)
-        {
+            courseStatusPicker.SelectedIndex = (int)course.Status;
 
         }
-
         private void OnSaveButtonClicked(object sender, EventArgs args)
         {
 
