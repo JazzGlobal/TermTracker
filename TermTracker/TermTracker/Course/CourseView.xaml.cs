@@ -32,13 +32,13 @@ namespace TermTracker
             switch (result)
             {
                 case "View":
-                    Debug.WriteLine("Viewing Assessment: {0}", selectedAssessment.AssessmentName);
+                    Debug.WriteLine($"Viewing Assessment: {selectedAssessment.AssessmentName}");
                     break;
                 case "Edit":
-                    Debug.WriteLine("Editing Assessment: {0}", selectedAssessment.AssessmentName);
+                    Debug.WriteLine($"Editing Assessment: {selectedAssessment.AssessmentName}");
                     break;
                 case "Cancel":
-                    Debug.WriteLine("Cancelled the tap for {0}", selectedAssessment.AssessmentName);
+                    Debug.WriteLine($"Cancelled the tap for {selectedAssessment.AssessmentName}");
                     break;
             }
         }
