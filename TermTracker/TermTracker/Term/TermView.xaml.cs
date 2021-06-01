@@ -54,6 +54,7 @@ namespace TermTracker
         }
         private void PopulateTermWithCourses()
         {
+            Debug.WriteLine("Populating Term With COURSES!");
             List<Assessment> assessments = new List<Assessment>();
             assessments.Add(new Assessment("Assessment 1", DateTime.Now, DateTime.Now.AddDays(2), Assessment.AssessmentType.Objective));
             assessments.Add(new Assessment("Assessment 2", DateTime.Now, DateTime.Now.AddDays(2), Assessment.AssessmentType.Performance));
