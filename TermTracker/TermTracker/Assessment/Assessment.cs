@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TermTracker
+namespace TermTracker.Assessment
 {
     public class Assessment
     {
