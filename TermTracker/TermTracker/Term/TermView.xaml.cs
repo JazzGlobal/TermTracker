@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Xamarin.Forms;
@@ -53,9 +54,12 @@ namespace TermTracker
         }
         private void PopulateTermWithCourses()
         {
+            List<Assessment> assessments = new List<Assessment>();
+            assessments.Add(new Assessment("Assessment 1", DateTime.Now, DateTime.Now.AddDays(2), Assessment.AssessmentType.Objective));
+            assessments.Add(new Assessment("Assessment 2", DateTime.Now, DateTime.Now.AddDays(2), Assessment.AssessmentType.Performance));
             for (int i = 0; i < 5; i++)
             {
-                term.Courses.Add(new Course("Course", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!"));
+                term.Courses.Add(new Course("Course", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
             }
         }
     }
