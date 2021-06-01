@@ -10,17 +10,19 @@ namespace TermTracker
 
         // Read this in via the database in final version.
         ObservableCollection<Term> terms = new ObservableCollection<Term>();
-        public ObservableCollection<Term> Terms { get { return terms; } }
+        public ObservableCollection<Term> Terms = new ObservableCollection<Term>();
         public MainPage()
         {
             terms.Add(new Term("Term 1", DateTime.Now));
             terms.Add(new Term("Term 2", DateTime.Now));
+            Reload();
             InitializeComponent();
             TermList.ItemsSource = Terms;
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            Reload();
         }
         private async void termLvItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -37,7 +39,7 @@ namespace TermTracker
                     break;
                 case "Edit":
                     Debug.WriteLine($"Editing the {selectedItem.DisplayName.ToUpper()} term!");
-                    await Navigation.PushAsync(new TermEdit(selectedItem));
+                    await Navigation.PushAsync(new TermEdit(ref selectedItem));
                     break;
             }
         }
@@ -50,6 +52,16 @@ namespace TermTracker
         private void OnClickReload(object sender, EventArgs e)
         {
             Console.WriteLine("Reloaded Terms!");
+            Reload();
+        }
+
+        private void Reload()
+        {
+            Terms.Clear();
+            foreach (var term in terms)
+            {
+                Terms.Add(term);
+            }
         }
     }
 }
