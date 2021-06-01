@@ -3,19 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.CourseEdit">
         <StackLayout Padding="30,10,30,10">
-            <Label x:Name="courseNameLabel" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
+            <Entry x:Name="courseNameValue"></Entry>
             <Label x:Name="courseStartLabel" Text="Course Start" FontAttributes="Bold"/>
             <DatePicker x:Name="courseStartValue"></DatePicker>
             <Label x:Name="courseEndLabel" Text="Course End" FontAttributes="Bold"/>
-            <DatePicker x:Name="courseEndValue"></DatePicker>
-
-            <Label x:Name="courseStatusLabel" FontAttributes="Bold" Text="Status"/>
+        <DatePicker x:Name="courseEndValue"></DatePicker>
+        <Label x:Name="courseStatusLabel" FontAttributes="Bold" Text="Status"/>
             <Picker x:Name="courseStatusPicker"></Picker>
             <Label x:Name="courseInstructorLabel" FontAttributes="Bold" Text="Instructor"/>
             <Entry x:Name="courseInstructorValue" Placeholder="Instructor Name ..."></Entry>
             <Label x:Name="courseNotesLabel" FontAttributes="Bold" Text="Notes"/>
             <Entry x:Name="courseNotesValue" Placeholder="Notes ..."></Entry>
-            <Button x:Name="goToAssessmentsButton" Text="Assessments" Clicked="OnGoToAssessmentsButtonClicked"></Button>
+            <Label x:Name="courseDisplayNotesLabel" FontAttributes="Bold" Text="Display Notes"/>
+            <CheckBox x:Name="courseDisplayNotesValue" ></CheckBox>
+            <Label x:Name="courseEnableNotificationsLabel" FontAttributes="Bold" Text="Enable Notifications"/>
+            <CheckBox x:Name="courseEnableNotifications"></CheckBox>
             <Button x:Name="saveButton" Text="Save" Clicked="OnSaveButtonClicked"></Button>
         </StackLayout>
 </ContentPage>

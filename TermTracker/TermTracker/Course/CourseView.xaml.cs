@@ -10,9 +10,9 @@ namespace TermTracker
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CourseView : ContentPage
     {
-        ObservableCollection<Assessment> assessments;
+        ObservableCollection<Assessment.Assessment> assessments;
         Course course;
-        public ObservableCollection<Assessment> Assessments { get { return assessments; } }
+        public ObservableCollection<Assessment.Assessment> Assessments { get { return assessments; } }
         public CourseView(Course course)
         {
             InitializeComponent();
@@ -23,27 +23,29 @@ namespace TermTracker
             courseStatusValue.Text = course.Status.ToString();
             courseNotesValue.Text = course.Notes;
             courseAssessmentsListView.ItemsSource = Assessments;
-            assessments = new ObservableCollection<Assessment>(course.Assessments);
+            assessments = new ObservableCollection<Assessment.Assessment>(course.Assessments);
 
             courseAssessmentsListView.ItemsSource = Assessments;
         }
 
         private async void OnAssessmentItemTapped(object sender, ItemTappedEventArgs args)
         {
-            Assessment selectedAssessment = (Assessment)args.Item;
-            var result = await DisplayActionSheet($"View / Edit {selectedAssessment.AssessmentName}", "Cancel", null, new string[] {"View", "Edit", "Delete"});
+            Assessment.Assessment selectedAssessment = (Assessment.Assessment)args.Item;
+            var result = await DisplayActionSheet($"View / Edit {selectedAssessment.AssessmentName}", "Cancel", null, new string[] { "View", "Edit", "Delete" });
             switch (result)
             {
                 case "View":
                     Debug.WriteLine($"Viewing Assessment: {selectedAssessment.AssessmentName}");
+                    await Navigation.PushAsync(new Assessment.AssessmentView(selectedAssessment));
                     break;
                 case "Edit":
                     Debug.WriteLine($"Editing Assessment: {selectedAssessment.AssessmentName}");
+                    await Navigation.PushAsync(new Assessment.AssessmentEdit(ref selectedAssessment));
                     break;
                 case "Delete":
                     Debug.WriteLine($"Deleting Assessment: {selectedAssessment.AssessmentName}");
                     Assessments.Remove(selectedAssessment);
-                    course.Assessments = new List<Assessment>(Assessments);
+                    course.Assessments = new List<Assessment.Assessment>(Assessments);
                     break;
                 case "Cancel":
                     Debug.WriteLine($"Cancelled the tap for {selectedAssessment.AssessmentName}");
