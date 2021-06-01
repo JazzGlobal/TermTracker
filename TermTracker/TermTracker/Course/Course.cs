@@ -13,9 +13,9 @@ namespace TermTracker
 
         public enum CourseStatus
         {
-            Scheduled = 1,
-            Ongoing = 2,
-            Withdrawn = 3
+            Scheduled = 0,
+            Ongoing = 1,
+            Withdrawn = 2
         }
         public string FormattedCourseTitle { get { return $"{CourseName}\n{CourseStart.ToString("MM-dd-yyyy")} - {CourseEnd.ToString("MM-dd-yyyy")}"; } }
 
