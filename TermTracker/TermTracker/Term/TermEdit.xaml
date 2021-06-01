@@ -7,7 +7,9 @@
             <Label Text="Term Name"/>
             <Entry x:Name="termNameInput" Placeholder="Term Name" ></Entry>
             <Label Text="Term Start Date"/>
-            <DatePicker x:Name="termStartDateInput" DateSelected="OnDateSelected"></DatePicker>
+            <DatePicker x:Name="termStartDateInput" DateSelected="OnDateSelected"></DatePicker>            
+            <Label Text="Term End Date"/>
+            <DatePicker x:Name="termEndDateInput" DateSelected="OnDateSelected"></DatePicker>
             <Button Text="Submit" Clicked="OnSubmitButtonClicked"></Button>
         </StackLayout>
 </ContentPage>
