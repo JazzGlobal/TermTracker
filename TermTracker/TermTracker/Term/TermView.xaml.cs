@@ -11,7 +11,7 @@ namespace TermTracker
     {
         ObservableCollection<Course> courses = new ObservableCollection<Course>();
 
-        public ObservableCollection<Course> Courses { get { return courses; } }
+        public ObservableCollection<Course> Courses = new ObservableCollection<Course>();
         Term term;
         public TermView(Term term)
         {
@@ -21,8 +21,16 @@ namespace TermTracker
             {
                 PopulateTermWithCourses();
             }
+            courses = new ObservableCollection<Course>(term.Courses);
+            Reload();
             coursesListLabel.Text = $"Courses ({term.DisplayName})";
-            CourseList.ItemsSource = term.Courses;
+            CourseList.ItemsSource = Courses;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            Reload();
         }
 
         private async void courseLvItemTapped(object sender, ItemTappedEventArgs e)
@@ -51,17 +59,34 @@ namespace TermTracker
         private void OnClickReload(object sender, EventArgs e)
         {
             Debug.WriteLine("Reload Button Pressed");
+            Reload();
         }
         private void PopulateTermWithCourses()
         {
             Debug.WriteLine("Populating Term With COURSES!");
-            List<Assessment> assessments = new List<Assessment>();
-            assessments.Add(new Assessment("Assessment 1", DateTime.Now, DateTime.Now.AddDays(2), Assessment.AssessmentType.Objective));
-            assessments.Add(new Assessment("Assessment 2", DateTime.Now, DateTime.Now.AddDays(2), Assessment.AssessmentType.Performance));
-            for (int i = 0; i < 5; i++)
+            List<Assessment.Assessment> assessments = new List<Assessment.Assessment>();
+            assessments.Add(new Assessment.Assessment("Assessment 1", DateTime.Now, DateTime.Now.AddDays(2), Assessment.Assessment.AssessmentType.Objective));
+            assessments.Add(new Assessment.Assessment("Assessment 2", DateTime.Now, DateTime.Now.AddDays(2), Assessment.Assessment.AssessmentType.Performance));
+
+            List<Course> courses_temp = new List<Course>();
+            courses_temp.Add(new Course("BIO 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
+            courses_temp.Add(new Course("MATH 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
+            courses_temp.Add(new Course("SDEV 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
+            courses_temp.Add(new Course("ANTH 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
+            courses_temp.Add(new Course("PHIL 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
+            courses_temp.Add(new Course("PHIL 102", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
+
+            term.Courses = courses_temp;
+        }
+
+        private void Reload()
+        {
+            Courses.Clear();
+            foreach (var course in courses)
             {
-                term.Courses.Add(new Course("Course", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
+                Courses.Add(course);
             }
         }
+
     }
 }
