@@ -5,11 +5,10 @@ using Xamarin.Forms;
 
 namespace TermTracker
 {
-    // [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TermEdit : ContentPage
     {
         Term term;
-        public TermEdit(Term term)
+        public TermEdit(ref Term term)
         {
             InitializeComponent();
             this.term = term;
@@ -18,6 +17,8 @@ namespace TermTracker
                 termNameLabel.Text = term.DisplayName;
                 termNameInput.Text = term.DisplayName;
             }
+            termStartDateInput.Date = term.TermStart;
+            termEndDateInput.Date = term.TermEnd;
         }
 
         void OnDateSelected(object sender, DateChangedEventArgs args)
@@ -33,6 +34,7 @@ namespace TermTracker
             {
                 term.DisplayName = termNameInput.Text;
                 term.TermStart = termStartDateInput.Date;
+                term.TermEnd = termEndDateInput.Date;
             }
             // TODO: Save current term name and start date to database.
             Navigation.PopAsync();
