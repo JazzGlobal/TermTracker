@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.CourseEdit">
+    <ScrollView>
         <StackLayout Padding="30,10,30,10">
             <Entry x:Name="courseNameValue"></Entry>
             <Label x:Name="courseStartLabel" Text="Course Start" FontAttributes="Bold"/>
@@ -12,6 +13,8 @@
             <Picker x:Name="courseStatusPicker"></Picker>
             <Label x:Name="courseInstructorLabel" FontAttributes="Bold" Text="Instructor"/>
             <Picker x:Name="courseInstructorValue"></Picker>
+            <Button Text="Add Instructor" Clicked="OnAddInstructorButtonClicked"></Button>
+            <Button Text="Edit Selected Instructor" Clicked="OnEditInstructorButtonClicked"></Button>
             <Label x:Name="courseNotesLabel" FontAttributes="Bold" Text="Notes"/>
             <Entry x:Name="courseNotesValue" Placeholder="Notes ..."></Entry>
             <Label x:Name="courseDisplayNotesLabel" FontAttributes="Bold" Text="Display Notes"/>
@@ -20,4 +23,5 @@
             <CheckBox x:Name="courseEnableNotifications"></CheckBox>
             <Button x:Name="saveButton" Text="Save" Clicked="OnSaveButtonClicked"></Button>
         </StackLayout>
+    </ScrollView>
 </ContentPage>

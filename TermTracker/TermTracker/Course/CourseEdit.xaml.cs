@@ -36,5 +36,15 @@ namespace TermTracker
             course.Status = (Course.CourseStatus) courseStatusPicker.SelectedIndex;
             Navigation.PopAsync();
         }
+
+        private async void OnAddInstructorButtonClicked(object sender, EventArgs args)
+        {
+
+        }        
+        private async void OnEditInstructorButtonClicked(object sender, EventArgs args)
+        {
+            var instructor = (Instructor.Instructor)courseInstructorValue.SelectedItem;
+            await Navigation.PushAsync(new Instructor.InstructorEdit(ref instructor));
+        }
     }
 }
