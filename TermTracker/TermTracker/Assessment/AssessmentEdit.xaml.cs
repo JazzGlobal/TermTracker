@@ -13,8 +13,10 @@ namespace TermTracker.Assessment
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AssessmentEdit : ContentPage
     {
+        Assessment assessment;
         public AssessmentEdit(ref Assessment assessment)
         {
+            this.assessment = assessment;
             InitializeComponent();
             assessmentNameValue.Text = assessment.AssessmentName;
             assessmentStartDateValue.Date = assessment.AssessmentStart;
@@ -27,7 +29,12 @@ namespace TermTracker.Assessment
 
         private void OnSaveButtonClicked(object sender, EventArgs args)
         {
+            assessment.AssessmentName = assessmentNameValue.Text;
+            assessment.AssessmentStart = assessmentStartDateValue.Date;
+            assessment.AssessmentEnd = assessmentEndDateValue.Date;
+            assessment.Type = (Assessment.AssessmentType) assessmentTypeValuePicker.SelectedIndex;
             Debug.WriteLine("Save Assessment Details Button Clicked!");
+            Navigation.PopAsync();
         }
     }
 }

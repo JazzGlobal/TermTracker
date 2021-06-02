@@ -12,22 +12,25 @@ namespace TermTracker
     {
         ObservableCollection<Assessment.Assessment> assessments;
         Course course;
-        public ObservableCollection<Assessment.Assessment> Assessments { get { return assessments; } }
+        public ObservableCollection<Assessment.Assessment> Assessments = new ObservableCollection<Assessment.Assessment>();
         public CourseView(Course course)
         {
             InitializeComponent();
             this.course = course;
+            assessments = new ObservableCollection<Assessment.Assessment>(course.Assessments);
             courseNameLabel.Text = course.CourseName;
             courseDurationLabel.Text = $"{course.CourseStart:MM-dd-yyyy} - {course.CourseEnd:MM-dd-yyyy}";
             courseInstructorValue.Text = course.Instructor;
             courseStatusValue.Text = course.Status.ToString();
             courseNotesValue.Text = course.Notes;
-            courseAssessmentsListView.ItemsSource = Assessments;
-            assessments = new ObservableCollection<Assessment.Assessment>(course.Assessments);
-
+            Reload();
             courseAssessmentsListView.ItemsSource = Assessments;
         }
-
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            Reload();
+        }
         private async void OnAssessmentItemTapped(object sender, ItemTappedEventArgs args)
         {
             Assessment.Assessment selectedAssessment = (Assessment.Assessment)args.Item;
@@ -50,6 +53,15 @@ namespace TermTracker
                 case "Cancel":
                     Debug.WriteLine($"Cancelled the tap for {selectedAssessment.AssessmentName}");
                     break;
+            }
+        }
+        private void Reload()
+        {
+            Assessments.Clear();
+            foreach(var assessment in assessments)
+            {
+                Assessments.Add(assessment);
+                Debug.WriteLine(assessment.AssessmentName);
             }
         }
     }
