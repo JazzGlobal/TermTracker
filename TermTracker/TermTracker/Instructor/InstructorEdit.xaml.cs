@@ -29,6 +29,7 @@ namespace TermTracker.Instructor
             instructor.Name = instructorNameValue.Text;
             instructor.PhoneNumber = instructorPhoneNumberValue.Text;
             instructor.Email = instructorEmailValue.Text;
+            Navigation.PopAsync();
             Debug.WriteLine("Save Instructor Button Clicked!");
         }
     }

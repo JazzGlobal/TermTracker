@@ -17,14 +17,19 @@ namespace TermTracker
             courseEndValue.Date = course.CourseEnd;
             courseNotesValue.Text = course.Notes;
             courseInstructorValue.ItemsSource = instructors;
-            courseInstructorValue.ItemDisplayBinding = new Binding("Name");
             int startingIndex = instructors.IndexOf(course.Instructor);
             courseInstructorValue.SelectedIndex = startingIndex;
+            courseInstructorValue.ItemDisplayBinding = new Binding("Name");
             courseStatusPicker.Items.Add(Course.CourseStatus.Ongoing.ToString());
             courseStatusPicker.Items.Add(Course.CourseStatus.Scheduled.ToString());
             courseStatusPicker.Items.Add(Course.CourseStatus.Withdrawn.ToString());
             courseStatusPicker.SelectedIndex = (int)course.Status;
 
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            // ReloadInstructors();
         }
         private void OnSaveButtonClicked(object sender, EventArgs args)
         {
@@ -45,6 +50,12 @@ namespace TermTracker
         {
             var instructor = (Instructor.Instructor)courseInstructorValue.SelectedItem;
             await Navigation.PushAsync(new Instructor.InstructorEdit(ref instructor));
+        }
+        private void ReloadInstructors()
+        {
+            List<Instructor.Instructor> instructors = Instructor.Instructor.AvailableInstructors;
+            courseInstructorValue.ItemsSource = instructors;
+            courseInstructorValue.ItemDisplayBinding = new Binding("Name");
         }
     }
 }
