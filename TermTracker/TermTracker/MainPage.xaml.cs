@@ -13,6 +13,10 @@ namespace TermTracker
         public ObservableCollection<Term> Terms = new ObservableCollection<Term>();
         public MainPage()
         {
+            Instructor.Instructor.AvailableInstructors.Add(new Instructor.Instructor("Chris Gambrell", "317-555-1234", "cgambr2@wgu.edu"));
+            Instructor.Instructor.AvailableInstructors.Add(new Instructor.Instructor("John Apple", "314-555-8956", "japple@wgu.edu"));
+            Instructor.Instructor.AvailableInstructors.Add(new Instructor.Instructor("Marky Mark", "369-555-3657", "mmark@wgu.edu"));
+
             terms.Add(new Term("Term 1", DateTime.Now));
             terms.Add(new Term("Term 2", DateTime.Now));
             Reload();
