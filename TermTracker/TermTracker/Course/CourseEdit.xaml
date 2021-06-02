@@ -7,11 +7,11 @@
             <Label x:Name="courseStartLabel" Text="Course Start" FontAttributes="Bold"/>
             <DatePicker x:Name="courseStartValue"></DatePicker>
             <Label x:Name="courseEndLabel" Text="Course End" FontAttributes="Bold"/>
-        <DatePicker x:Name="courseEndValue"></DatePicker>
-        <Label x:Name="courseStatusLabel" FontAttributes="Bold" Text="Status"/>
+            <DatePicker x:Name="courseEndValue"></DatePicker>
+            <Label x:Name="courseStatusLabel" FontAttributes="Bold" Text="Status"/>
             <Picker x:Name="courseStatusPicker"></Picker>
             <Label x:Name="courseInstructorLabel" FontAttributes="Bold" Text="Instructor"/>
-            <Entry x:Name="courseInstructorValue" Placeholder="Instructor Name ..."></Entry>
+            <Picker x:Name="courseInstructorValue"></Picker>
             <Label x:Name="courseNotesLabel" FontAttributes="Bold" Text="Notes"/>
             <Entry x:Name="courseNotesValue" Placeholder="Notes ..."></Entry>
             <Label x:Name="courseDisplayNotesLabel" FontAttributes="Bold" Text="Display Notes"/>

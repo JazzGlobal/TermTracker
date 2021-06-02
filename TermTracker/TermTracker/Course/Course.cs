@@ -9,7 +9,7 @@ namespace TermTracker
         public DateTime CourseStart { get; set; }
         public DateTime CourseEnd { get; set; }
         public CourseStatus Status { get; set; }
-        public string Instructor { get; set; }
+        public Instructor.Instructor Instructor { get; set; }
         public string Notes { get; set; }
         public List<Assessment.Assessment> Assessments { get; set; }
         public enum CourseStatus
@@ -20,7 +20,7 @@ namespace TermTracker
         }
         public string FormattedCourseTitle { get { return $"{CourseName}\n{CourseStart.ToString("MM-dd-yyyy")} - {CourseEnd.ToString("MM-dd-yyyy")}"; } }
 
-        public Course(string courseName, DateTime startDate, DateTime endDate, CourseStatus status, string instructor, string notes, List<Assessment.Assessment> assessments)
+        public Course(string courseName, DateTime startDate, DateTime endDate, CourseStatus status, Instructor.Instructor instructor, string notes, List<Assessment.Assessment> assessments)
         {
             CourseName = courseName;
             CourseStart = startDate;

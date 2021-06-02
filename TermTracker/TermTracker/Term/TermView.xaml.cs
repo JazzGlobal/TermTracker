@@ -45,7 +45,7 @@ namespace TermTracker
                     break;
                 case "Edit":
                     Debug.WriteLine($"Editing the {selectedCourse.CourseName} course!");
-                    await Navigation.PushAsync(new CourseEdit(selectedCourse));
+                    await Navigation.PushAsync(new CourseEdit(ref selectedCourse));
                     break;
                 case "Cancel":
                     Debug.WriteLine("Cancelling with no changes!");
@@ -69,12 +69,12 @@ namespace TermTracker
             assessments.Add(new Assessment.Assessment("Assessment 2", DateTime.Now, DateTime.Now.AddDays(2), Assessment.Assessment.AssessmentType.Performance));
 
             List<Course> courses_temp = new List<Course>();
-            courses_temp.Add(new Course("BIO 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
-            courses_temp.Add(new Course("MATH 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
-            courses_temp.Add(new Course("SDEV 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
-            courses_temp.Add(new Course("ANTH 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
-            courses_temp.Add(new Course("PHIL 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
-            courses_temp.Add(new Course("PHIL 102", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, "Chris Gambrell", "This class is easy!", assessments));
+            courses_temp.Add(new Course("BIO 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, Instructor.Instructor.AvailableInstructors[0], "This class is easy!", assessments));
+            courses_temp.Add(new Course("MATH 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, Instructor.Instructor.AvailableInstructors[0], "This class is easy!", assessments));
+            courses_temp.Add(new Course("SDEV 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, Instructor.Instructor.AvailableInstructors[0], "This class is easy!", assessments));
+            courses_temp.Add(new Course("ANTH 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, Instructor.Instructor.AvailableInstructors[0], "This class is easy!", assessments));
+            courses_temp.Add(new Course("PHIL 101", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, Instructor.Instructor.AvailableInstructors[0], "This class is easy!", assessments));
+            courses_temp.Add(new Course("PHIL 102", DateTime.Now, DateTime.Now.AddDays(90), Course.CourseStatus.Scheduled, Instructor.Instructor.AvailableInstructors[0], "This class is easy!", assessments));
 
             term.Courses = courses_temp;
         }
@@ -85,6 +85,7 @@ namespace TermTracker
             foreach (var course in courses)
             {
                 Courses.Add(course);
+                Debug.WriteLine($"Course instructor: {course.Instructor.Name}");
             }
         }
 

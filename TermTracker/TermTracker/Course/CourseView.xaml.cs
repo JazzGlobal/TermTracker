@@ -20,7 +20,9 @@ namespace TermTracker
             assessments = new ObservableCollection<Assessment.Assessment>(course.Assessments);
             courseNameLabel.Text = course.CourseName;
             courseDurationLabel.Text = $"{course.CourseStart:MM-dd-yyyy} - {course.CourseEnd:MM-dd-yyyy}";
-            courseInstructorValue.Text = course.Instructor;
+            courseInstructorNameValue.Text = course.Instructor.Name;
+            courseInstructorEmailValue.Text = course.Instructor.Email;
+            courseInstructorPhoneValue.Text = course.Instructor.PhoneNumber;
             courseStatusValue.Text = course.Status.ToString();
             courseNotesValue.Text = course.Notes;
             Reload();
