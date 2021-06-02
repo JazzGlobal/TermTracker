@@ -1,7 +1,11 @@
-﻿namespace TermTracker.Instructor
+﻿using System.Collections.Generic;
+
+namespace TermTracker.Instructor
 {
     public class Instructor
     {
+        public static List<Instructor> AvailableInstructors = new List<Instructor>();
+
         private string name;
         private string phoneNumber;
         private string email;
