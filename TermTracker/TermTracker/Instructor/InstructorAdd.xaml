@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TermTracker.Instructor.InstructorAdd">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label x:Name="instructorNameLabel"></Label>
+            <Entry x:Name="instructorNameValue" Placeholder="Example: John Doe"></Entry>
+            <Label x:Name="instructorPhoneNumberLabel"></Label>
+            <Entry x:Name="instructorPhoneNumberValue" Placeholder="Example: 326-555-9856"></Entry>
+            <Label x:Name="instructorEmailLabel"></Label>
+            <Entry x:Name="instructorEmailValue" Placeholder="Example: firstnamelastname@wgu.edu"></Entry>
+            <Button Text="Submit" Clicked="OnSaveButtonClicked"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

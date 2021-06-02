@@ -39,7 +39,7 @@ namespace TermTracker
 
         private async void OnAddInstructorButtonClicked(object sender, EventArgs args)
         {
-
+            await Navigation.PushAsync(new Instructor.InstructorAdd());
         }        
         private async void OnEditInstructorButtonClicked(object sender, EventArgs args)
         {
