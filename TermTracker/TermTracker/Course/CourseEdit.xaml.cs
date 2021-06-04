@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using SQLite;
 
 namespace TermTracker
 {
     public partial class CourseEdit : ContentPage
     {
         Course course;
+        SQLiteConnection conn;
         public CourseEdit(ref Course course)
         {
             InitializeComponent();
-            List<Instructor.Instructor> instructors = Instructor.Instructor.AvailableInstructors;
+            conn = new SQLiteConnection(MainPage.AndroidPath);
+            List<Instructor.Instructor> instructors = Instructor.Instructor.GetAllInstructors(conn);
             this.course = course;
             courseNameValue.Text = course.CourseName;
             courseStartValue.Date = course.CourseStart;
