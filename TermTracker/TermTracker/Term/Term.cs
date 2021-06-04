@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using SQLite;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Diagnostics;
 
 namespace TermTracker
 {
+    [Table("terms")]
     public class Term : INotifyPropertyChanged
     {
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        public int ID { get; set; }
         private string displayName;
+        [MaxLength(100)]
         public string DisplayName
         {
             get { return displayName; }
@@ -17,6 +26,7 @@ namespace TermTracker
             }
         }
         private DateTime termStart;
+        [MaxLength(250)]
         public DateTime TermStart
         {
             get { return termStart; }
@@ -27,6 +37,7 @@ namespace TermTracker
             }
         }
         private DateTime termEnd;
+        [MaxLength(250)]
         public DateTime TermEnd
         {
             get { return termEnd; }
@@ -37,6 +48,7 @@ namespace TermTracker
             }
         }
         private List<Course> courses;
+        [Ignore]
         public List<Course> Courses
         {
             get { return courses; }
@@ -46,6 +58,33 @@ namespace TermTracker
                 PropertyChanged(this, new PropertyChangedEventArgs("Courses"));
             }
         }
+        [Column("Courses")]
+        public string FinalSerialized
+        {
+            get; 
+            set;
+        }
+        [Ignore]
+        public string SerializedCourses
+        {
+            get 
+            {
+                string jsonString = "";
+                if(courses != null)
+                {
+                    Debug.WriteLine($"Courses Length: {courses.Count}");
+                    jsonString = JsonSerializer.Serialize(courses);
+                }
+                FinalSerialized = jsonString;
+                Debug.WriteLine(FinalSerialized);
+                return jsonString;
+            }
+        }
+        public List<Course> DeserializeCourses(string json)
+        {
+            List<Course> deserializedCourses = JsonSerializer.Deserialize<List<Course>>(json);
+            return deserializedCourses;
+        }
         public string FormattedTermTitle { get { return $"{DisplayName}\n{TermStart.ToString("MM-dd-yyyy")} - {TermEnd.ToString("MM-dd-yyyy")}"; } }
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -54,7 +93,7 @@ namespace TermTracker
             this.displayName = displayName;
             TermStart = termStart;
             TermEnd = termStart.AddMonths(6);
-            Courses = new List<Course>();
+            this.courses = new List<Course>();
         }
 
         public Term(string displayName, DateTime termStart, List<Course> courses)
@@ -62,12 +101,31 @@ namespace TermTracker
             DisplayName = displayName;
             TermStart = termStart;
             TermEnd = termStart.AddMonths(6);
-            Courses = courses;
+            this.courses = courses;
+            var hey = SerializedCourses;
         }
         public Term()
         {
 
         }
 
+        public static List<Term> GetAllTerms(SQLiteConnection conn)
+        {
+            List<Term> termList = conn.Table<Term>().ToList();
+            return termList;
+        }
+        public static int AddNewTerm(SQLiteConnection conn, Term term)
+        {
+            var result = conn.Insert(term);
+            return result;
+        }
+        public static void UpdateTerm(SQLiteConnection conn, Term term)
+        {
+            conn.Update(term);
+        }
+        public static void DeleteTerm(SQLiteConnection conn, Term term)
+        {
+            conn.Delete(term);
+        }
     }
 }
