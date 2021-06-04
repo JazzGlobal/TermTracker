@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace TermTracker
 {
+    [Serializable]
     public class Course
     {
         public string CourseName { get; set; }
@@ -20,15 +21,15 @@ namespace TermTracker
         }
         public string FormattedCourseTitle { get { return $"{CourseName}\n{CourseStart.ToString("MM-dd-yyyy")} - {CourseEnd.ToString("MM-dd-yyyy")}"; } }
 
-        public Course(string courseName, DateTime startDate, DateTime endDate, CourseStatus status, Instructor.Instructor instructor, string notes, List<Assessment.Assessment> assessments)
+        public Course(string CourseName, DateTime CourseStart, DateTime CourseEnd, CourseStatus Status, Instructor.Instructor Instructor, string Notes, List<Assessment.Assessment> Assessments)
         {
-            CourseName = courseName;
-            CourseStart = startDate;
-            CourseEnd = endDate;
-            Status = status;
-            Instructor = instructor;
-            Notes = notes;
-            Assessments = assessments;
+            this.CourseName = CourseName;
+            this.CourseStart = CourseStart;
+            this.CourseEnd = CourseEnd;
+            this.Status = Status;
+            this.Instructor = Instructor;
+            this.Notes = Notes;
+            this.Assessments = Assessments;
         }
     }
 }
