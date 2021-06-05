@@ -16,7 +16,7 @@
             <Label x:Name="courseNotesLabel" FontAttributes="Bold" Text="Notes"/>
             <Label x:Name="courseNotesValue"/>
             <Label x:Name="courseAssessmentsLabel" FontAttributes="Bold" Text="Assessments"/>
-            <ListView x:Name="courseAssessmentsListView" ItemTapped="OnAssessmentItemTapped" GroupDisplayBinding="{Binding AssessmentName}" GroupShortNameBinding="{Binding Type}" HasUnevenRows="True">
+            <ListView x:Name="courseAssessmentsListView" GroupDisplayBinding="{Binding AssessmentName}" GroupShortNameBinding="{Binding Type}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding AssessmentName}" Detail="{Binding Type}" />

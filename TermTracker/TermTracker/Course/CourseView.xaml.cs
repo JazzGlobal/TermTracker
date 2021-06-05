@@ -33,30 +33,6 @@ namespace TermTracker
             base.OnAppearing();
             Reload();
         }
-        private async void OnAssessmentItemTapped(object sender, ItemTappedEventArgs args)
-        {
-            Assessment.Assessment selectedAssessment = (Assessment.Assessment)args.Item;
-            var result = await DisplayActionSheet($"View / Edit {selectedAssessment.AssessmentName}", "Cancel", null, new string[] { "View", "Edit", "Delete" });
-            switch (result)
-            {
-                case "View":
-                    Debug.WriteLine($"Viewing Assessment: {selectedAssessment.AssessmentName}");
-                    await Navigation.PushAsync(new Assessment.AssessmentView(selectedAssessment));
-                    break;
-                case "Edit":
-                    Debug.WriteLine($"Editing Assessment: {selectedAssessment.AssessmentName}");
-                    await Navigation.PushAsync(new Assessment.AssessmentEdit(ref selectedAssessment));
-                    break;
-                case "Delete":
-                    Debug.WriteLine($"Deleting Assessment: {selectedAssessment.AssessmentName}");
-                    Assessments.Remove(selectedAssessment);
-                    course.Assessments = new List<Assessment.Assessment>(Assessments);
-                    break;
-                case "Cancel":
-                    Debug.WriteLine($"Cancelled the tap for {selectedAssessment.AssessmentName}");
-                    break;
-            }
-        }
         private void Reload()
         {
             Assessments.Clear();
