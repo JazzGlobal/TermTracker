@@ -40,7 +40,7 @@ namespace TermTracker
         {
             SQLiteConnection conn = new SQLiteConnection(AndroidPath);
             var result = conn.CreateTable<Instructor.Instructor>();
-            // conn.DeleteAll<Term>();
+            //conn.DeleteAll<Term>();
             conn.CreateTable<Term>();
             Console.WriteLine($"Database Creation Result: {result}");
             
@@ -55,6 +55,9 @@ namespace TermTracker
             {
                 // Generate terms and save to the database.
                 var course = new Course("Test Course Name!!!!!", DateTime.Now, DateTime.Now, Course.CourseStatus.Ongoing, Instructor.Instructor.GetAllInstructors(conn)[0], "Some bull spit.", new List<Assessment.Assessment>());
+                Assessment.Assessment assessment = new Assessment.Assessment("Assessment", DateTime.Now, DateTime.Now, Assessment.Assessment.AssessmentType.Objective);
+                course.Assessments.Add(assessment);
+                course.Assessments.Add(assessment);
                 var courseList = new List<Course>();
                 courseList.Add(course);
                 courseList.Add(course);
@@ -87,7 +90,7 @@ namespace TermTracker
             {
                 case "View":
                     Debug.WriteLine($"Viewing the {selectedItem.DisplayName.ToUpper()} term!");
-                    await Navigation.PushAsync(new TermView(selectedItem));
+                    await Navigation.PushAsync(new TermView(ref selectedItem));
                     break;
                 case "Edit":
                     Debug.WriteLine($"Editing the {selectedItem.DisplayName.ToUpper()} term!");
