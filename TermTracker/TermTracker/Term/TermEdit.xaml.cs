@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-
+using SQLite;
 using Xamarin.Forms;
 
 namespace TermTracker
@@ -35,6 +35,8 @@ namespace TermTracker
                 term.DisplayName = termNameInput.Text;
                 term.TermStart = termStartDateInput.Date;
                 term.TermEnd = termEndDateInput.Date;
+                SQLiteConnection conn = new SQLiteConnection(MainPage.AndroidPath);
+                Term.UpdateTerm(conn, term);
             }
             // TODO: Save current term name and start date to database.
             Navigation.PopAsync();
