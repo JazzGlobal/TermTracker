@@ -15,6 +15,13 @@
             <Picker x:Name="courseInstructorValue"></Picker>
             <Button Text="Add Instructor" Clicked="OnAddInstructorButtonClicked"></Button>
             <Button Text="Edit Selected Instructor" Clicked="OnEditInstructorButtonClicked"></Button>
+            <ListView x:Name="courseAssessmentsListView" ItemTapped="OnAssessmentItemTapped" GroupDisplayBinding="{Binding AssessmentName}" GroupShortNameBinding="{Binding Type}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding AssessmentName}" Detail="{Binding Type}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <Label x:Name="courseNotesLabel" FontAttributes="Bold" Text="Notes"/>
             <Entry x:Name="courseNotesValue" Placeholder="Notes ..."></Entry>
             <Label x:Name="courseDisplayNotesLabel" FontAttributes="Bold" Text="Display Notes"/>

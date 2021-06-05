@@ -13,6 +13,9 @@ namespace TermTracker
         public Instructor.Instructor Instructor { get; set; }
         public string Notes { get; set; }
         public List<Assessment.Assessment> Assessments { get; set; }
+        
+        public Boolean DisplayNotes { get; set; }
+        public Boolean EnableNotifications { get; set; }
         public enum CourseStatus
         {
             Scheduled = 0,
@@ -30,6 +33,8 @@ namespace TermTracker
             this.Instructor = Instructor;
             this.Notes = Notes;
             this.Assessments = Assessments;
+            DisplayNotes = false;
+            EnableNotifications = false;
         }
     }
 }
