@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Xamarin.Forms;
+using SQLite;
 
 namespace TermTracker
 {
@@ -13,7 +14,7 @@ namespace TermTracker
 
         public ObservableCollection<Course> Courses = new ObservableCollection<Course>();
         Term term;
-        public TermView(Term term)
+        public TermView(ref Term term)
         {
             InitializeComponent();
             this.term = term;
@@ -21,10 +22,10 @@ namespace TermTracker
             {
                 PopulateTermWithCourses();
             }
-            courses = new ObservableCollection<Course>(term.Courses);
+            // courses = new ObservableCollection<Course>(term.Courses);
             Reload();
             coursesListLabel.Text = $"Courses ({term.DisplayName})";
-            CourseList.ItemsSource = Courses;
+            CourseList.ItemsSource = term.Courses;
         }
 
         protected override void OnAppearing()
@@ -36,7 +37,7 @@ namespace TermTracker
         private async void courseLvItemTapped(object sender, ItemTappedEventArgs e)
         {
             Course selectedCourse = (Course)e.Item;
-            string result = await DisplayActionSheet($"View / Edit {selectedCourse.CourseName}", "Cancel", null, new string[] { "View", "Edit" });
+            string result = await DisplayActionSheet($"View / Edit {selectedCourse.CourseName}", "Cancel", null, new string[] { "View", "Edit", "Delete" });
             switch (result)
             {
                 case "View":
@@ -46,6 +47,15 @@ namespace TermTracker
                 case "Edit":
                     Debug.WriteLine($"Editing the {selectedCourse.CourseName} course!");
                     await Navigation.PushAsync(new CourseEdit(ref selectedCourse));
+                    break;
+                case "Delete":
+                    Debug.WriteLine($"Deleting the {selectedCourse.CourseName} course!");
+                    term.Courses.Remove(selectedCourse);
+                    SQLiteConnection conn = new SQLiteConnection(MainPage.AndroidPath);
+                    Term.UpdateTerm(conn, term);
+                    Debug.WriteLine(term.Courses.Count);
+                    conn.Close();
+                    Reload();
                     break;
                 case "Cancel":
                     Debug.WriteLine("Cancelling with no changes!");
@@ -81,13 +91,18 @@ namespace TermTracker
 
         private void Reload()
         {
-            Courses.Clear();
-            foreach (var course in courses)
+            List<Course> finalCourseList = new List<Course>();
+            foreach (Course course in term.Courses)
             {
-                Courses.Add(course);
-                Debug.WriteLine($"Course instructor: {course.Instructor.Name}");
+                finalCourseList.Add(course);
+                Debug.WriteLine(course.CourseName);
             }
-        }
+            Debug.WriteLine(finalCourseList.Count);
+            CourseList.ItemsSource = finalCourseList;
 
+            SQLiteConnection conn = new SQLiteConnection(MainPage.AndroidPath);
+            Term.UpdateTerm(conn, term);
+            conn.Close();
+        }
     }
 }

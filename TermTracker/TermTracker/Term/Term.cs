@@ -121,7 +121,9 @@ namespace TermTracker
         }
         public static void UpdateTerm(SQLiteConnection conn, Term term)
         {
-            conn.Update(term);
+            var serialized = term.SerializedCourses;
+            var rowsUpdated = conn.Update(term);
+            Debug.WriteLine($"Updated {rowsUpdated} rows for Term: {term.DisplayName}");
         }
         public static void DeleteTerm(SQLiteConnection conn, Term term)
         {
