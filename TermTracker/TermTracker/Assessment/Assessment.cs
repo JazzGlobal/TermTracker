@@ -14,13 +14,12 @@ namespace TermTracker.Assessment
             Performance = 1
         }
 
-        public Assessment(string name, DateTime start, DateTime end, AssessmentType type)
+        public Assessment(string AssessmentName, DateTime AssessmentStart, DateTime AssessmentEnd, AssessmentType Type)
         {
-            AssessmentName = name;
-            AssessmentStart = start;
-            AssessmentEnd = end;
-            Type = type;
+            this.AssessmentName = AssessmentName;
+            this.AssessmentStart = AssessmentStart;
+            this.AssessmentEnd = AssessmentEnd;
+            this.Type = Type;
         }
-
     }
 }
