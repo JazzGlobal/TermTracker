@@ -18,6 +18,8 @@ namespace TermTracker.Assessment
         {
             this.assessment = assessment;
             InitializeComponent();
+            assessmentNameTitle.Text = assessment.AssessmentName;
+            assessmentNameLabel.Text = assessment.AssessmentName;
             assessmentNameValue.Text = assessment.AssessmentName;
             assessmentStartDateValue.Date = assessment.AssessmentStart;
             assessmentEndDateValue.Date = assessment.AssessmentEnd;

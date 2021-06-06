@@ -11,6 +11,7 @@ namespace TermTracker
     public partial class TermView : ContentPage
     {
         ObservableCollection<Course> courses = new ObservableCollection<Course>();
+        const int MaximumCourses = 6;
 
         public ObservableCollection<Course> Courses = new ObservableCollection<Course>();
         Term term;
@@ -64,7 +65,25 @@ namespace TermTracker
         }
         private void OnClickAddCourse(object sender, EventArgs e)
         {
-            Debug.WriteLine("Add Course Button Pressed");
+            if(term.Courses.Count >= 6)
+            {
+                DisplayAlert("Too Many Courses!", $"You can only have {MaximumCourses} courses within each term.", "OK");
+            }
+            else
+            {
+                List<Assessment.Assessment> assessments = new List<Assessment.Assessment>();
+                SQLiteConnection conn = new SQLiteConnection(MainPage.AndroidPath);
+                Assessment.Assessment assessment = new Assessment.Assessment("Objective Assessment", DateTime.Now, DateTime.Now.AddMonths(6), Assessment.Assessment.AssessmentType.Objective);
+                assessments.Add(assessment);
+                assessment = (Assessment.Assessment)assessment.Clone();
+                assessment.AssessmentName = "Performance Assessment";
+                assessment.Type = Assessment.Assessment.AssessmentType.Performance;
+                assessments.Add(assessment);
+                var course = new Course("Default Course", DateTime.Now, DateTime.Now, Course.CourseStatus.Scheduled, conn.Table<Instructor.Instructor>().ToList()[0], "Empty Notes", assessments);
+                term.Courses.Add(course);
+                conn.Close();
+                Reload();
+            }
         }
         private void OnClickReload(object sender, EventArgs e)
         {

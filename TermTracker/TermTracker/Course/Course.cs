@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace TermTracker
 {
     [Serializable]
-    public class Course
+    public class Course : ICloneable
     {
         public string CourseName { get; set; }
         public DateTime CourseStart { get; set; }
@@ -20,7 +20,8 @@ namespace TermTracker
         {
             Scheduled = 0,
             Ongoing = 1,
-            Withdrawn = 2
+            Completed = 2,
+            Withdrawn = 3
         }
         public string FormattedCourseTitle { get { return $"{CourseName}\n{CourseStart.ToString("MM-dd-yyyy")} - {CourseEnd.ToString("MM-dd-yyyy")}"; } }
 
@@ -35,6 +36,11 @@ namespace TermTracker
             this.Assessments = Assessments;
             DisplayNotes = false;
             EnableNotifications = false;
+        }
+
+        public object Clone()
+        {
+            return base.MemberwiseClone();
         }
     }
 }

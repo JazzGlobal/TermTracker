@@ -2,15 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.Instructor.InstructorAdd">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Save" Activated="OnSaveButtonClicked"  Order="Primary" Priority="0"></ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <Label x:Name="instructorNameLabel"></Label>
+        <StackLayout Padding="30,10,30,10">
+            <Label x:Name="instructorFormTitle"  Text="Add New Instructor" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
+            <Label x:Name="instructorNameLabel" Text="Name"></Label>
             <Entry x:Name="instructorNameValue" Placeholder="Example: John Doe"></Entry>
-            <Label x:Name="instructorPhoneNumberLabel"></Label>
+            <Label x:Name="instructorPhoneNumberLabel" Text="Phone Number"></Label>
             <Entry x:Name="instructorPhoneNumberValue" Placeholder="Example: 326-555-9856"></Entry>
-            <Label x:Name="instructorEmailLabel"></Label>
+            <Label x:Name="instructorEmailLabel" Text="Address"></Label>
             <Entry x:Name="instructorEmailValue" Placeholder="Example: firstnamelastname@wgu.edu"></Entry>
-            <Button Text="Submit" Clicked="OnSaveButtonClicked"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

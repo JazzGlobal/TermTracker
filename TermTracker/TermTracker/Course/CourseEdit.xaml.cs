@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using SQLite;
 using System.Diagnostics;
+using System.Linq;
 
 namespace TermTracker
 {
@@ -21,23 +22,26 @@ namespace TermTracker
             courseEndValue.Date = course.CourseEnd;
             courseNotesValue.Text = course.Notes;
             courseInstructorValue.ItemsSource = instructors;
-            int startingIndex = instructors.IndexOf(course.Instructor);
-            courseInstructorValue.SelectedIndex = startingIndex;
+            var tempInstructor = course.Instructor;
+            var found = from instructor in instructors.AsEnumerable()
+                                where instructor.Id == tempInstructor.Id
+                                select instructor;
+            int startingIndex = instructors.IndexOf(found.First());
             courseInstructorValue.ItemDisplayBinding = new Binding("Name");
+            courseInstructorValue.SelectedIndex = startingIndex;
             courseStatusPicker.Items.Add(Course.CourseStatus.Ongoing.ToString());
             courseStatusPicker.Items.Add(Course.CourseStatus.Scheduled.ToString());
             courseStatusPicker.Items.Add(Course.CourseStatus.Withdrawn.ToString());
             courseStatusPicker.SelectedIndex = (int)course.Status;
-            courseAssessmentsListView.ItemsSource = course.Assessments;
+            // courseAssessmentsListView.ItemsSource = course.Assessments;
             courseEnableNotifications.IsChecked = course.EnableNotifications;
             courseDisplayNotesValue.IsChecked = course.DisplayNotes;
-
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
             ReloadAssessments();
-            // ReloadInstructors();
+            ReloadInstructors();
         }
         private void OnSaveButtonClicked(object sender, EventArgs args)
         {
@@ -74,6 +78,10 @@ namespace TermTracker
                     break;
             }
         }
+        private async void OnViewAssessmentsClicked(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new Assessment.AssessmentListView(ref course));
+        }
         private async void OnAddInstructorButtonClicked(object sender, EventArgs args)
         {
             await Navigation.PushAsync(new Instructor.InstructorAdd());
@@ -85,19 +93,33 @@ namespace TermTracker
         }
         private void ReloadInstructors()
         {
-            List<Instructor.Instructor> instructors = Instructor.Instructor.AvailableInstructors;
+            List<Instructor.Instructor> instructors = Instructor.Instructor.GetAllInstructors(conn);
             courseInstructorValue.ItemsSource = instructors;
+            var tempInstructor = course.Instructor;
+            var found = from instructor in instructors.AsEnumerable()
+                        where instructor.Id == tempInstructor.Id
+                        select instructor;
+            int startingIndex = 0;
+            try
+            {
+                startingIndex = instructors.IndexOf(found.First());
+            } catch (Exception e)
+            {
+                startingIndex = 0;
+            }
             courseInstructorValue.ItemDisplayBinding = new Binding("Name");
+            courseInstructorValue.SelectedIndex = startingIndex;
         }
         private void ReloadAssessments()
         {
-            List<Assessment.Assessment> assessments = new List<Assessment.Assessment>();
-            foreach (var assessment in course.Assessments)
-            {
-                assessments.Add(assessment);
-                Debug.WriteLine(assessment.AssessmentName);
-            }
-            course.Assessments = assessments;
+            //List<Assessment.Assessment> assessments = new List<Assessment.Assessment>();
+            //foreach (var assessment in course.Assessments)
+            //{
+            //    assessments.Add(assessment);
+            //    Debug.WriteLine(assessment.AssessmentName);
+            //}
+            //course.Assessments = assessments;
+            //courseAssessmentsListView.ItemsSource = course.Assessments;
         }
     }
 }

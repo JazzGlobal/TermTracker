@@ -51,5 +51,11 @@ namespace TermTracker.Instructor
             int result = conn.Insert(instructor);
             return result;
         }
+
+        public static int UpdateInstructor(SQLite.SQLiteConnection conn, Instructor instructor) 
+        {
+            int result = conn.Update(instructor);
+            return result;
+        }
     }
 }

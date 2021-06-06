@@ -15,6 +15,7 @@
             <Label x:Name="courseInstructorEmailValue"/>
             <Label x:Name="courseNotesLabel" FontAttributes="Bold" Text="Notes"/>
             <Label x:Name="courseNotesValue"/>
+            <Button x:Name="shareButton" Text="Share" Clicked="ShareButton_Clicked"/>
             <Label x:Name="courseAssessmentsLabel" FontAttributes="Bold" Text="Assessments"/>
             <ListView x:Name="courseAssessmentsListView" GroupDisplayBinding="{Binding AssessmentName}" GroupShortNameBinding="{Binding Type}" HasUnevenRows="True">
                 <ListView.ItemTemplate>

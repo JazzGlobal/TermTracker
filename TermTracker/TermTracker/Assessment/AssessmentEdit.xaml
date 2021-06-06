@@ -2,9 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.Assessment.AssessmentEdit">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Save" Activated="OnSaveButtonClicked"  Order="Primary" Priority="0"></ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="30,10,30,10">
-            <Label x:Name="assessmentNameLabel" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
+            <Label x:Name="assessmentNameTitle" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
+            <Label x:Name="assessmentNameLabel"/>
             <Entry x:Name="assessmentNameValue"></Entry>
             <Label x:Name="assessmentStartDateLabel" Text="Start Date"></Label>
             <DatePicker x:Name="assessmentStartDateValue"></DatePicker>
@@ -12,7 +16,6 @@
             <DatePicker x:Name="assessmentEndDateValue"></DatePicker>
             <Label x:Name="assessmentTypeLabel" FontAttributes="Bold" Text="Type"/>
             <Picker x:Name="assessmentTypeValuePicker"></Picker>
-            <Button Text="Submit" Clicked="OnSaveButtonClicked"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

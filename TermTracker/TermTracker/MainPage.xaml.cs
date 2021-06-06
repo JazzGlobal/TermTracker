@@ -5,11 +5,14 @@ using Xamarin.Forms;
 using System.IO;
 using SQLite;
 using System.Collections.Generic;
+using Plugin.LocalNotifications;
 
 namespace TermTracker
 {
     public partial class MainPage : ContentPage
     {
+
+        const int MaximumTerms = 4;
 
         // Read this in via the database in final version.
         ObservableCollection<Term> terms = new ObservableCollection<Term>();
@@ -34,13 +37,17 @@ namespace TermTracker
                 FinalTermList.Add(term);
             }
             TermList.ItemsSource = FinalTermList;
+            Term.TermDatabaseChanged += ScheduleNotifications;
         }
 
         private void InitializeDataFromDatabase()
         {
             SQLiteConnection conn = new SQLiteConnection(AndroidPath);
             var result = conn.CreateTable<Instructor.Instructor>();
+            
             // conn.DeleteAll<Term>();
+            // conn.DeleteAll<Instructor.Instructor>();
+
             conn.CreateTable<Term>();
             Console.WriteLine($"Database Creation Result: {result}");
             
@@ -54,17 +61,8 @@ namespace TermTracker
             if (Term.GetAllTerms(conn).Count == 0)
             {
                 // Generate terms and save to the database.
-                var course = new Course("Test Course Name!!!!!", DateTime.Now, DateTime.Now, Course.CourseStatus.Ongoing, Instructor.Instructor.GetAllInstructors(conn)[0], "Some bull spit.", new List<Assessment.Assessment>());
-                Assessment.Assessment assessment = new Assessment.Assessment("Assessment", DateTime.Now, DateTime.Now, Assessment.Assessment.AssessmentType.Objective);
-                course.Assessments.Add(assessment);
-                course.Assessments.Add(assessment);
-                var courseList = new List<Course>();
-                courseList.Add(course);
-                courseList.Add(course);
-                courseList.Add(course);
-                courseList.Add(course);
-                Term.AddNewTerm(conn, new Term("Term Name 1 Test", DateTime.Now, courseList));
-                Term.AddNewTerm(conn, new Term("Term Name 2 Test", DateTime.Now, courseList));
+                Term.AddNewTerm(conn, Term.GenerateDefaultTerm("Default Term 1"));
+                Term.AddNewTerm(conn, Term.GenerateDefaultTerm("Default Term 2"));
             }
             Debug.WriteLine($"Instructors: {Instructor.Instructor.GetAllInstructors(conn).Count}");
             
@@ -109,13 +107,15 @@ namespace TermTracker
         private void OnClickAddTerm(object sender, EventArgs e)
         {
             SQLiteConnection conn = new SQLiteConnection(AndroidPath);
-            var course = new Course("Test Course Name!!!!!", DateTime.Now, DateTime.Now, Course.CourseStatus.Ongoing, Instructor.Instructor.GetAllInstructors(conn)[0], "Some bull spit.", new List<Assessment.Assessment>());
-            List<Course> courses = new List<Course>();
-            courses.Add(course);
-            Term term = new Term("New Term", DateTime.Now, courses);
-            Term.AddNewTerm(conn, term);
+            if(conn.Table<Term>().ToList().Count >= MaximumTerms)
+            {
+                DisplayAlert("Too Many Terms!", $"You can only have {MaximumTerms} terms at once.", "OK");
+            } else
+            {
+                Term term = Term.GenerateDefaultTerm();
+                Term.AddNewTerm(conn, term);
+            }
             conn.Close();
-
             OnAppearing();
         }
 
@@ -134,6 +134,44 @@ namespace TermTracker
                 FinalTermList.Add(term);
             }
             TermList.ItemsSource = FinalTermList;
+        }
+        public void ScheduleNotifications(object sender, EventArgs e)
+        {
+            Debug.WriteLine("TIME TO SCHEDULE NOTIFICATIONS SINCE TERMS JUST GOT UPDATED!!!");
+            SQLiteConnection conn = new SQLiteConnection(AndroidPath);
+            List<Term> terms = conn.Table<Term>().ToList();
+            int i = 0; // Notification ID Counter.
+            foreach (Term term in terms)
+            {
+                term.Courses = term.DeserializeCourses(term.FinalSerialized);
+                foreach (Course course in term.Courses)
+                {
+                    if(course.EnableNotifications)
+                    {
+                        ScheduleSingleNotification("Course Starting", $"{course.CourseName}", i, course.CourseStart);
+                        i++;
+                        ScheduleSingleNotification("Course Ending", $"{course.CourseName}", i, course.CourseEnd);
+                        i++;
+                    
+                        foreach (Assessment.Assessment assessment in course.Assessments)
+                        {
+                            ScheduleSingleNotification("Assessment Starting", $"{course.CourseName}'s \"{assessment.AssessmentName}\" assessment is starting", i, assessment.AssessmentStart);
+                            i++;
+                            ScheduleSingleNotification("Assessment Ending", $"{course.CourseName}'s \"{assessment.AssessmentName}\" assessment is ending", i, assessment.AssessmentEnd);
+                            i++;
+                        }
+                    }
+                }
+            }
+        }
+        private void ScheduleSingleNotification(string title, string body, int id, DateTime time)
+        {
+            if(!(DateTime.Now >= time))
+            {
+                // Schedule 
+                Debug.WriteLine($"Scheduling notification for {title}: {body}");
+                CrossLocalNotifications.Current.Show(title, body, id, time);
+            }
         }
     }
 }

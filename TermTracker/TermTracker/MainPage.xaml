@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.MainPage">
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Add New" Activated="OnClickAddTerm" Order="Primary" Priority="0"></ToolbarItem>
+    </ContentPage.ToolbarItems>
     <StackLayout>
         <Label Text="Terms" FontSize="Title" Margin="0,0,10,0" Padding="30,10,30,10" HorizontalTextAlignment="Center"/>
         <ListView x:Name="TermList" ItemTapped="termLvItemTapped" ItemsSource="{Binding Terms}" HasUnevenRows="True">
@@ -14,7 +16,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Add Term" Clicked="OnClickAddTerm"></Button>
         <Button Text="Reload" Clicked="OnClickReload"/>
     </StackLayout>
 </ContentPage>

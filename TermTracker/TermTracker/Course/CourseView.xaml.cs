@@ -1,9 +1,12 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
+using System.Threading.Tasks;
 
 namespace TermTracker
 {
@@ -31,6 +34,17 @@ namespace TermTracker
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            if (!course.DisplayNotes)
+            {
+                courseNotesLabel.IsVisible = false;
+                courseNotesValue.IsVisible = false;
+                shareButton.IsVisible = false;
+            } else
+            {
+                courseNotesLabel.IsVisible = true;
+                courseNotesValue.IsVisible = true;
+                shareButton.IsVisible = true;
+            }
             Reload();
         }
         private void Reload()
@@ -41,6 +55,18 @@ namespace TermTracker
                 Assessments.Add(assessment);
                 Debug.WriteLine(assessment.AssessmentName);
             }
+        }
+        private async void ShareButton_Clicked(object sender, EventArgs args)
+        {
+            await ShareNotes();
+        }
+        private async Task ShareNotes()
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Text = courseNotesValue.Text,
+                Title = $"{course.CourseName} Notes"
+            });
         }
     }
 }

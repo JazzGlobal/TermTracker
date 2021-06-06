@@ -87,7 +87,7 @@ namespace TermTracker
         }
         public string FormattedTermTitle { get { return $"{DisplayName}\n{TermStart.ToString("MM-dd-yyyy")} - {TermEnd.ToString("MM-dd-yyyy")}"; } }
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
+        public static event EventHandler TermDatabaseChanged;
         public Term(string displayName, DateTime termStart)
         {
             this.displayName = displayName;
@@ -108,7 +108,38 @@ namespace TermTracker
         {
 
         }
+        public static Term GenerateDefaultTerm(string termName="Default Term")
+        {
+            var courseList = new List<Course>();
+            SQLiteConnection conn = new SQLiteConnection(MainPage.AndroidPath);
+            var course = new Course("BIO 101", DateTime.Now, DateTime.Now, Course.CourseStatus.Ongoing, Instructor.Instructor.GetAllInstructors(conn)[0], "Course Notes", new List<Assessment.Assessment>());
+            Assessment.Assessment assessment = new Assessment.Assessment("Objective Assessment", DateTime.Now, DateTime.Now.AddMonths(6), Assessment.Assessment.AssessmentType.Objective);
+            course.Assessments.Add(assessment);
+            assessment = (Assessment.Assessment) assessment.Clone();
+            assessment.AssessmentName = "Performance Assessment";
+            assessment.Type = Assessment.Assessment.AssessmentType.Performance;
+            course.Assessments.Add(assessment);
 
+            courseList.Add(course);
+            course = (Course) course.Clone();
+            course.CourseName = "MATH 101";
+            courseList.Add(course);
+            course = (Course)course.Clone();
+            course.CourseName = "SDEV 101";
+            courseList.Add(course);
+            course = (Course)course.Clone();
+            course.CourseName = "ANTH 101";
+            courseList.Add(course);
+            course = (Course)course.Clone();
+            course.CourseName = "PHIL 101";
+            courseList.Add(course);
+            course = (Course)course.Clone();
+            course.CourseName = "PHIL 102";
+            courseList.Add(course);
+            conn.Close();
+
+            return new Term(termName, DateTime.Now, courseList);
+        }
         public static List<Term> GetAllTerms(SQLiteConnection conn)
         {
             List<Term> termList = conn.Table<Term>().ToList();
@@ -117,17 +148,38 @@ namespace TermTracker
         public static int AddNewTerm(SQLiteConnection conn, Term term)
         {
             var result = conn.Insert(term);
+            EventHandler handler = TermDatabaseChanged;
+            if (handler != null)
+            {
+                handler(new object(), new EventArgs());
+            }
             return result;
         }
         public static void UpdateTerm(SQLiteConnection conn, Term term)
         {
             var serialized = term.SerializedCourses;
             var rowsUpdated = conn.Update(term);
+            EventHandler handler = TermDatabaseChanged;
+            if(handler != null)
+            {
+                handler(new object(), new EventArgs());
+            }
             Debug.WriteLine($"Updated {rowsUpdated} rows for Term: {term.DisplayName}");
         }
         public static void DeleteTerm(SQLiteConnection conn, Term term)
         {
-            conn.Delete(term);
+            try
+            {
+                conn.Delete(term);
+                EventHandler handler = TermDatabaseChanged;
+                if (handler != null)
+                {
+                    handler(new object(), new EventArgs());
+                }
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
     }
 }

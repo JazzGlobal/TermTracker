@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,19 +19,44 @@ namespace TermTracker.Instructor
         {
             this.instructor = instructor;
             InitializeComponent();
-
+            instructorEditLabel.Text = instructor.Name;
             instructorNameValue.Text = instructor.Name;
             instructorEmailValue.Text = instructor.Email;
             instructorPhoneNumberValue.Text = instructor.PhoneNumber;
         }
 
-        private void OnSaveButtonClicked(object sender, EventArgs args)
+        private async void OnSaveButtonClicked(object sender, EventArgs args)
         {
-            instructor.Name = instructorNameValue.Text;
-            instructor.PhoneNumber = instructorPhoneNumberValue.Text;
-            instructor.Email = instructorEmailValue.Text;
-            Navigation.PopAsync();
-            Debug.WriteLine("Save Instructor Button Clicked!");
+            string tempInstructorName = instructor.Name;
+            string tempInstructorPhoneNumber = instructor.PhoneNumber;
+            string tempInstructorEmail = instructor.Email;
+
+            try
+            {
+                if (!InstructorHelperFunctions.IsValidEmail(instructorEmailValue.Text))
+                {
+                    throw new InvalidEmailException("That wasn't a valid email!");
+                }
+                else if (string.IsNullOrEmpty(instructorNameValue.Text))
+                {
+                    throw new EmptyNameException("Name information cannot be blank!");
+                }
+                else if (string.IsNullOrEmpty(instructorPhoneNumberValue.Text))
+                {
+                    throw new EmptyPhoneNumberException("Phone information cannot be blank!");
+                }
+
+                SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(MainPage.AndroidPath);
+                instructor.Name = instructorNameValue.Text;
+                instructor.PhoneNumber = instructorPhoneNumberValue.Text;
+                instructor.Email = instructorEmailValue.Text;
+                Instructor.UpdateInstructor(conn , instructor);
+                conn.Close();
+                await Navigation.PopAsync();
+            } catch (Exception e)
+            {
+                await DisplayAlert("Invalid Input", e.Message, "OK");
+            }
         }
     }
 }

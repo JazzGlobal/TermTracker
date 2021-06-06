@@ -2,7 +2,7 @@
 
 namespace TermTracker.Assessment
 {
-    public class Assessment
+    public class Assessment : ICloneable
     {
         public string AssessmentName { get; set; }
         public DateTime AssessmentStart { get; set; }
@@ -20,6 +20,11 @@ namespace TermTracker.Assessment
             this.AssessmentStart = AssessmentStart;
             this.AssessmentEnd = AssessmentEnd;
             this.Type = Type;
+        }
+
+        public object Clone()
+        {
+            return base.MemberwiseClone();
         }
     }
 }
