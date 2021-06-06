@@ -20,7 +20,7 @@
             <ListView x:Name="courseAssessmentsListView" GroupDisplayBinding="{Binding AssessmentName}" GroupShortNameBinding="{Binding Type}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding AssessmentName}" Detail="{Binding Type}" />
+                        <TextCell Text="{Binding AssessmentName}" Detail="{Binding GetFormattedTitle}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

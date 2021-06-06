@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace TermTracker.Assessment
 {
@@ -20,6 +21,14 @@ namespace TermTracker.Assessment
             this.AssessmentStart = AssessmentStart;
             this.AssessmentEnd = AssessmentEnd;
             this.Type = Type;
+        }
+        [JsonIgnore]
+        public string GetFormattedTitle
+        {
+            get
+            {
+                return $"{Type} ... {AssessmentStart.ToString("MM-dd-yyyy")} - {AssessmentEnd.ToString("MM-dd-yyyy")}";
+            }
         }
 
         public object Clone()

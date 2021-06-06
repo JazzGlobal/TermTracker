@@ -45,15 +45,35 @@ namespace TermTracker
         }
         private void OnSaveButtonClicked(object sender, EventArgs args)
         {
-            course.CourseName = courseNameValue.Text;
-            course.CourseStart = courseStartValue.Date;
-            course.CourseEnd = courseEndValue.Date;
-            course.Notes = courseNotesValue.Text;
-            course.Instructor = (Instructor.Instructor) courseInstructorValue.SelectedItem;
-            course.Status = (Course.CourseStatus) courseStatusPicker.SelectedIndex;
-            course.DisplayNotes = courseDisplayNotesValue.IsChecked;
-            course.EnableNotifications = courseEnableNotifications.IsChecked;
-            Navigation.PopAsync();
+            try
+            {
+                if (courseStartValue.Date >= courseEndValue.Date)
+                {
+                    throw new DateSequenceInvalidException("The Course start date must occur before the course end date.");
+                }
+                if (string.IsNullOrEmpty(courseNameValue.Text))
+                {
+                    throw new CourseNameEmptyException("The Course name cannot be empty!");
+                }
+                else
+                {
+                    course.CourseName = courseNameValue.Text;
+                    course.CourseStart = courseStartValue.Date;
+                    course.CourseEnd = courseEndValue.Date;
+                    course.Notes = courseNotesValue.Text;
+                    course.Instructor = (Instructor.Instructor)courseInstructorValue.SelectedItem;
+                    course.Status = (Course.CourseStatus)courseStatusPicker.SelectedIndex;
+                    course.DisplayNotes = courseDisplayNotesValue.IsChecked;
+                    course.EnableNotifications = courseEnableNotifications.IsChecked;
+                    Navigation.PopAsync();
+                }
+            } catch (Exception e)
+            {
+                DisplayAlert("Invalid Input", e.Message, "OK");
+            }
+
+
+
         }
         private async void OnAssessmentItemTapped(object sender, ItemTappedEventArgs args)
         {
@@ -120,6 +140,13 @@ namespace TermTracker
             //}
             //course.Assessments = assessments;
             //courseAssessmentsListView.ItemsSource = course.Assessments;
+        }
+    }
+    public class CourseNameEmptyException : Exception
+    {
+        public CourseNameEmptyException(string message) : base(message)
+        {
+
         }
     }
 }

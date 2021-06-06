@@ -31,12 +31,26 @@ namespace TermTracker.Assessment
 
         private void OnSaveButtonClicked(object sender, EventArgs args)
         {
-            assessment.AssessmentName = assessmentNameValue.Text;
-            assessment.AssessmentStart = assessmentStartDateValue.Date;
-            assessment.AssessmentEnd = assessmentEndDateValue.Date;
-            assessment.Type = (Assessment.AssessmentType) assessmentTypeValuePicker.SelectedIndex;
-            Debug.WriteLine("Save Assessment Details Button Clicked!");
-            Navigation.PopAsync();
-        }
+            try
+            {
+                if (string.IsNullOrEmpty(assessmentNameValue.Text))
+                {
+                    throw new Exception("Assessment Name Cannot Be Empty!");
+                }
+                if (assessmentStartDateValue.Date >= assessmentEndDateValue.Date)
+                {
+                    throw new Exception("Assessment Start date must occur before assessment end date.");
+                }
+                assessment.AssessmentName = assessmentNameValue.Text;
+                assessment.AssessmentStart = assessmentStartDateValue.Date;
+                assessment.AssessmentEnd = assessmentEndDateValue.Date;
+                assessment.Type = (Assessment.AssessmentType)assessmentTypeValuePicker.SelectedIndex;
+                Debug.WriteLine("Save Assessment Details Button Clicked!");
+                Navigation.PopAsync();
+            } catch (Exception e)
+            {
+                DisplayAlert("Invalid Input", e.Message, "OK");
+            }
+    }
     }
 }

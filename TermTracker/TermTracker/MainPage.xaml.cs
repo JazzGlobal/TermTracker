@@ -45,7 +45,7 @@ namespace TermTracker
             SQLiteConnection conn = new SQLiteConnection(AndroidPath);
             var result = conn.CreateTable<Instructor.Instructor>();
             
-            // conn.DeleteAll<Term>();
+            conn.DeleteAll<Term>();
             // conn.DeleteAll<Instructor.Instructor>();
 
             conn.CreateTable<Term>();

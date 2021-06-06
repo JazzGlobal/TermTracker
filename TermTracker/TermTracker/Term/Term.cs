@@ -112,7 +112,7 @@ namespace TermTracker
         {
             var courseList = new List<Course>();
             SQLiteConnection conn = new SQLiteConnection(MainPage.AndroidPath);
-            var course = new Course("BIO 101", DateTime.Now, DateTime.Now, Course.CourseStatus.Ongoing, Instructor.Instructor.GetAllInstructors(conn)[0], "Course Notes", new List<Assessment.Assessment>());
+            var course = new Course("BIO 101", DateTime.Now, DateTime.Now.AddMonths(6), Course.CourseStatus.Ongoing, Instructor.Instructor.GetAllInstructors(conn)[0], "Course Notes", new List<Assessment.Assessment>());
             Assessment.Assessment assessment = new Assessment.Assessment("Objective Assessment", DateTime.Now, DateTime.Now.AddMonths(6), Assessment.Assessment.AssessmentType.Objective);
             course.Assessments.Add(assessment);
             assessment = (Assessment.Assessment) assessment.Clone();

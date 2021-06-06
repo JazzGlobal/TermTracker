@@ -30,16 +30,26 @@ namespace TermTracker
         void OnSubmitButtonClicked(object sender, EventArgs args)
         {
             Debug.WriteLine("Submit button clicked!");
-            if (termNameInput.Text.Trim() != "" && termNameInput.Text != null)
+            try
             {
-                term.DisplayName = termNameInput.Text;
-                term.TermStart = termStartDateInput.Date;
-                term.TermEnd = termEndDateInput.Date;
-                SQLiteConnection conn = new SQLiteConnection(MainPage.AndroidPath);
-                Term.UpdateTerm(conn, term);
+                if (termStartDateInput.Date > termEndDateInput.Date)
+                {
+                    throw new DateSequenceInvalidException("Term Start Date must occur before Term End Date.");
+                }
+                if (termNameInput.Text.Trim() != "" && termNameInput.Text != null)
+                {
+                    term.DisplayName = termNameInput.Text;
+                    term.TermStart = termStartDateInput.Date;
+                    term.TermEnd = termEndDateInput.Date;
+                    SQLiteConnection conn = new SQLiteConnection(MainPage.AndroidPath);
+                    Term.UpdateTerm(conn, term);
+                    // TODO: Save current term name and start date to database.
+                    Navigation.PopAsync();
+                }
+            } catch (DateSequenceInvalidException dsiEx)
+            {
+                DisplayAlert("Invalid Date(s)", dsiEx.Message, "OK");
             }
-            // TODO: Save current term name and start date to database.
-            Navigation.PopAsync();
         }
     }
 }
